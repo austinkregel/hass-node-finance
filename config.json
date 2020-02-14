@@ -1,0 +1,21 @@
+{
+  "name": "Node Finance",
+  "version": "0.0.1",
+  "slug": "node-finance",
+  "description": "Node base finance events",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "application",
+  "boot": "auto",
+  "options": {
+    "plaid_env": "",
+    "plaid_public_key": "",
+    "plaid_secret": "",
+    "plaid_client_id": "",
+    "named_entities": []
+  },
+  "schema": {},
+  "ports": {
+    "3000/tcp": "3000"
+  },
+  "homeassistant_api": true
+}
