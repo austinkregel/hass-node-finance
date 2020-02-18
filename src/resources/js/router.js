@@ -1,5 +1,4 @@
 import Base from './routes/Base'
-import AuthBase from "./routes/Auth/AuthBase";
 
 const unauthenticatedRoute = (path, pathToComponent, extraOptions = {}) => (Object.assign({
 	path,
@@ -20,17 +19,15 @@ const authenticatedRoute = (path, pathToComponent, extraOptions = {}) => (Object
 export default [
 	authenticatedRoute('/', './routes/Base', {
 		children: [
-			unauthenticatedRoute('auth', './routes/Auth/AuthBase', {
+			{path: '/', redirect: '/accounts'},
+			authenticatedRoute('accounts', './routes/Accounts'),
+			authenticatedRoute('dashboard', './routes/Dashboard'),
+			authenticatedRoute('transactions', './routes/Transactions'),
+			authenticatedRoute('settings', './routes/Settings/SettingsBase', {
 				children: [
-					unauthenticatedRoute('login/:type?', './routes/Auth/Login'),
-					unauthenticatedRoute('callback/:type(.*)',  './routes/Auth/Callback'),
+					authenticatedRoute('/password', './routes/Settings/Password'),
 				]
 			}),
-
-			unauthenticatedRoute('/auth/register', './routes/Auth/Register'),
-			unauthenticatedRoute('/auth/register/:type', './routes/Auth/RegisterDetails'),
-
-			authenticatedRoute('*', './components/Icons/Broker')
 		],
 	})
 ]

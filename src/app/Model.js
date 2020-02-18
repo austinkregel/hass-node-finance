@@ -7,6 +7,7 @@ let promiseMe = (closure) => new Promise((resolve, reject) => {
     }
 })
 
+
 const fillableData = (data, fillable) => {
     let object = {};
 
@@ -18,6 +19,8 @@ const fillableData = (data, fillable) => {
 
     return Object.assign({}, object, data);
 }
+
+const dayjs = require('dayjs');
 
 module.exports = class BookshelfModel extends app.Model {
     constructor(...args) {
@@ -40,17 +43,30 @@ module.exports = class BookshelfModel extends app.Model {
     }
 
     static create(data) {
-        return promiseMe(() => this.query().insert(fillableData(data)))
+        return promiseMe(() =>
+            this.query()
+                .insert(
+                    Object.assign(
+                        fillableData(data),
+                        {
+                            created_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+                            updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+                        }
+                    )
+                )
+        );
     }
 
     async update(data) {
-        return await this.$query().patchAndFetchById(this.id, this.fillableFilter(data))
+        delete data.created_at;
+        data.updated_at = dayjs().format('YYYY-MM-DD HH:mm:ss');
+        return await this.$query().patchAndFetchById(this.id, Object.assign(this.fillableFilter(data), { updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss')}))
     }
 
     fillableFilter(data) {
         let goodData = {};
         this.fillable().forEach((value) => {
-            if (data[value]) {
+            if (data[value] !== undefined) {
                 goodData[value] = data[value]
             }
         });

@@ -9,8 +9,7 @@ exports.up = async function(knex, Promise) {
         table.string('password', 128).nullable();
 
         // Timestamps.
-        table.dateTime('created_at').notNullable().defaultTo(knex.fn.now()).index();
-        table.dateTime('updated_at').notNullable().defaultTo(knex.fn.now());
+        table.timestamps(true)
     });
 };
 

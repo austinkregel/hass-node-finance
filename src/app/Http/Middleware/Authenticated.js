@@ -21,5 +21,7 @@ module.exports = (req, res, next) => {
         user: session.user
     }))
 
+    req.session.user = session.user;
+
     next();
 }

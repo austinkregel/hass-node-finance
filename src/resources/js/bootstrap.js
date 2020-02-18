@@ -7,8 +7,11 @@ import Vuex from 'vuex'
 import Const from './constants'
 import VueToasted from 'vue-toasted';
 import { buildUrl } from '@kbco/query-builder';
+import VueApexCharts from 'vue-apexcharts'
+import dayjs from "dayjs";
 
 window.buildUrl = buildUrl;
+window.dayjs = dayjs;
 
 const setupAxios = () => {
     const CancelToken = axios.CancelToken;
@@ -41,7 +44,7 @@ export default (Vue) => {
     Vue.use(VueRouter);
     Vue.use(Vuex);
     Vue.use(VueToasted);
-
+    Vue.component('apexchart', VueApexCharts)
     Vue.component('zondicon', Zondicon);
 
     // This will automatically register .vue files as components based on the file name.
@@ -57,7 +60,7 @@ export default (Vue) => {
 
     router.beforeEach(async (to, from, next) => {
         if (to.meta.forceAuth) {
-            await app.$store.dispatch('checkIfWeAreLoggedIn', {
+            await store.dispatch('checkIfWeAreLoggedIn', {
                 router,
                 route: to,
             })

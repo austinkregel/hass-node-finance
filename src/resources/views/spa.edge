@@ -1,5 +1,5 @@
 @layout('layouts.app')
 
 @section('content')
-    <router-view></router-view>
+    <router-view :user="{{ json(user) }}"></router-view>
 @endsection

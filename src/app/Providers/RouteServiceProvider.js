@@ -18,7 +18,7 @@ Router.express.use(
 module.exports = class RouteServiceProvider {
 	register() {
 		this.registerMiddleware();
-		Router.express.use(require('express').static('public'));
+		Router.express.use(require('express').static(require('path').join(__dirname, '../..', 'public')));
 		var server = require('http').Server(Router.express);
 		app.io = require('socket.io')(server);
 

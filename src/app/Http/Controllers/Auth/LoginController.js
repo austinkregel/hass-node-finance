@@ -1,19 +1,7 @@
 const User = app.require('app/User');
-const bcrypt = app.make('bcrypt');
 
 module.exports = class LoginController {
     async index(req, res) {
-        let user = await User.query().findOne({ email: 'austinkregel@gmail.com' });
-        req.user = user;
-        delete req.user.password;
-        req.session.user = user;
-        res.locals.user = user;
-        req.session.save();
-
-        console.log(req.session)
-
-        return res.redirect('/');
-
         return app.view.render('auth.login', {
             csrf: req.csrfToken()
         })
