@@ -48,18 +48,6 @@
                 accountOpen: false,
                 accountNavItems: [
                     {
-                        link: '/settings/password',
-                        name: "Settings",
-                        type: 'link'
-                    },
-                    {
-                        name: 'Support',
-                        type: 'button',
-                        onClick: () => {
-                            console.log("Action tbd... Not sure if we want a support button yet.")
-                        }
-                    },
-                    {
                         name: 'Sign out',
                         type: 'button',
                         onClick: this.logout

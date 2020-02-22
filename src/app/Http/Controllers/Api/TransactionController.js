@@ -24,9 +24,10 @@ module.exports = class TransactionController {
             key,
             ...expandValue(query.filter[key])
         ]));
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 15;
 
-        let dbQuery = Transaction.query().orderBy('created_at', 'desc');
-
+        let dbQuery = Transaction.query().orderBy('created_at', 'desc').page(page, limit);
         for (let index in wheres) {
             dbQuery = dbQuery.where(...wheres[index]);
         }
@@ -38,7 +39,17 @@ module.exports = class TransactionController {
                 })
 
         // dbQuery = dbQuery.paginate((req.query.limit || 15), (req.query.page || 1));
-        return await dbQuery
+        // dbQuery = dbQuery.limit(((limit)));
+
+        const { results, total } = await dbQuery.offset((page - 1) * limit).limit(limit)
+
+        return {
+            data: results,
+            total,
+            from: (limit * page) - limit ,
+            to: limit * page,
+            hasMorePages: (limit * page) < total
+        }
     }
 
     async refreshTheTransactions(req, res) {

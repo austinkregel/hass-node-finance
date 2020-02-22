@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="w-full md:w-3/5 mx-auto">
-            <div class="flex flex-wrap mt-4 items-center justify-between">
+        <div class="w-full">
+            <div class="flex flex-wrap m-4 px-2 items-center justify-between">
                 <div class="flex flex-col">
                     <div class="text-xl">Transactions</div>
                     <div v-if="transactions.length > 0">
@@ -17,9 +17,15 @@
                     </button>
                 </div>
             </div>
-            <div class="flex flex-col">
-                <div class="flex flex-wrap w-full rounded mt-4 -mx-2">
+            <div class="flex flex-col mx-4">
+                <div class="flex flex-wrap w-full rounded">
                     <single-transaction class="w-full" v-for="transaction in transactions" :key="transaction.id" :transaction="transaction" />
+                    <div class="my-4 italic text-center w-full" v-if="!hasMorePages">There are no more transactions...</div>
+                    <div class="my-4 italic text-center w-full" v-else>
+                        <button @click="loadNextPage" class="py-2 px-4 border-blue-500 rounded border text-blue-500 hover:bg-blue-500 hover:text-white">
+                            Load more...
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,23 +39,32 @@
         data() {
             return {
                 transactions: [],
+                hasMorePages: false,
+                page: 1,
+                limit: 15,
             }
         },
         methods: {
             async getTransactions() {
-                let { data: transactions } = await axios.get(buildUrl('/api/transactions', {
+                let { data: { data: transactions, hasMorePages } } = await axios.get(buildUrl('/api/transactions', {
                     filter: {
                         date: '>:' + dayjs().subtract(15, 'days').format('YYYY-MM-DD'),
                     },
-                    'include': '[account,categories]'
+                    'include': '[account,categories]',
+                    page:  this.page,
+                    limit:  this.limit
                 }));
 
-                this.transactions = transactions;
+                this.hasMorePages = hasMorePages;
+                this.transactions.push(...(transactions));
             },
             async syncTransactions() {
                 await axios.post(buildUrl('/api/sync-transactions'));
                 await this.getTransactions();
-
+            },
+            async loadNextPage() {
+                this.page++;
+                this.getTransactions()
             }
         },
         mounted() {

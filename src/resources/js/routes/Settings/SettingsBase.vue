@@ -1,8 +1,7 @@
 <template>
     <div class="w-full mt-8">
-        <div class="container mx-auto">
             <div class="flex flex-wrap">
-                <div class="w-full md:w-1/4">
+                <div class="w-full">
                     <div class="relative mx-4 md:mx-0 md:mr-4 z-0">
                         <span v-if="selectedIndex !== -1" class="absolute h-10 w-full bg-white rounded-lg shadow ease-out transition-transform transition-medium" :style="{ transform: `translateY(calc(100% * ${selectedIndex}))` }"></span>
                         <ul class="relative">
@@ -25,7 +24,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>

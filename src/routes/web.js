@@ -34,6 +34,55 @@ module.exports = (router) => {
 	});
 
 	router.get({
+		path: '/api/account_kpis/:account',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/AccountsController', 'showKpi')
+	})
+	router.get({
+		path: '/api/accounts',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/AccountsController', 'index')
+	})
+	router.get({
+		path: '/api/transactions',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/TransactionController', 'index')
+	})
+	router.put({
+		path: '/api/accounts/:account',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/AccountsController', 'patch')
+	})
+
+	router.get({
+		path: '/api/tokens',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/TokensController', 'index')
+	})
+
+	router.post({
+		path: '/api/sync-tokens',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/TokensController', 'refreshTheAccounts')
+	})
+	router.post({
+		path: '/api/hass-io-controller',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/HassIoController', 'info')
+	})
+	router.post({
+		path: '/api/sync-transactions',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/TransactionController', 'refreshTheTransactions')
+	})
+
+	router.post({
+		path: '/api/plaid_exchange_token',
+		middleware: app.make('middleware.api'),
+		resource: app.controller('Api/PlaidController', 'exchange')
+	})
+
+	router.get({
 		path: '/:route?/:id?',
 		middleware: app.make('middleware.auth'),
 		resource: app.controller('HomeController', 'spaRoute')

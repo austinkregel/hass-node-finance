@@ -22,7 +22,7 @@
 
         <div class="rounded mt-4">
             <div v-if="accounts.length > 0" >
-                <div class="flex flex-wrap items-center justify-between bg-white px-4 py-2 shadow my-2" v-for="account in accounts">
+                <div class="flex flex-wrap items-center justify-between bg-white px-4 py-2 shadow my-4" v-for="account in accounts">
                     <div class="flex flex-wrap items-center">
                         <div>
                             <zondicon v-if="account.type === 'depository'" class="w-8 h-8 text-gray-500 fill-current" icon="wallet" />

@@ -11,6 +11,9 @@ const events = require('events');
 const Bus = new events.EventEmitter();
 
 Model.knex(knex);
+/**
+ * @type {Objection.Model}
+ */
 app.Model = Model;
 app.knex = knex;
 

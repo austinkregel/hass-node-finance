@@ -10,7 +10,8 @@ module.exports = {
             manifestDirectory = '/' + manifestDirectory
         }
 
-        let hotFile = app.public_path(manifestDirectory + '/hot');
+
+        let hotFile = app.public_path('/hot');
 
         if (app.fs.file_exists(hotFile)) {
             let url = app.fs.file_get_contents(hotFile);
@@ -47,4 +48,7 @@ module.exports = {
     route(routeName) {
         return Object.values(app.routes).map(route => app.resolveObject(route, routeName))
     },
+    json(obj) {
+        return JSON.stringify(obj);
+    }
 }
