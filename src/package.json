@@ -34,7 +34,7 @@
 		"knex": "^0.20.1",
 		"laravel-mix": "^4.0.15",
 		"mysql": "^2.16.0",
-		"npm": "^6.13.1",
+		"npm": "^6.14.6",
 		"objection": "^2.0.0-alpha.9",
 		"objection-password": "^2.0.0",
 		"oleoo": "^1.0.7",
